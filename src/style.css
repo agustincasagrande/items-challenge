@@ -1,0 +1,14 @@
+.all {
+	text-align: center;
+	padding: 1em;
+	line-height: 1.4;
+}
+
+.tools-list {
+	list-style-type: none;
+	padding: 1em;
+}
+
+.tool {
+	text-align: center;
+}
