@@ -11,6 +11,8 @@
     "react-dom": "^16.13.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.8.6",
+    "@babel/plugin-transform-runtime": "^7.8.3",
     "parcel-bundler": "^1.12.4",
     "prettier": "^1.19.1"
   },
@@ -18,6 +20,25 @@
     "dev": "parcel src/index.html",
     "format": "prettier \"src/**/*.{js,html}\" --write",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "useBuiltIns": "usage",
+          "targets": {
+            "browsers": "defaults"
+          },
+          "debug": true
+        }
+      ]
+    ],
+    "plugins": [
+      [
+        "@babel/transform-runtime"
+      ]
+    ]
   },
   "keywords": [],
   "author": "",
