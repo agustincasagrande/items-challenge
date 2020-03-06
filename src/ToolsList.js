@@ -4,7 +4,18 @@ import HTML5Backend from "react-dnd-html5-backend";
 import { DragDropContext } from "react-dnd";
 import Card from "./Card";
 const update = require("immutability-helper");
-import "./loading.gif";
+import loadingImage from "./loading.gif";
+//import "./pictures/pincers";
+//import "./pictures/Hammer";
+//import "./pictures/Screwdriver";
+//import "./pictures/wrench";
+
+//falta: fix drag n drop
+//falta: fix edit button
+//falta: displaying deffault items
+//falta: add a picture to deffault items
+//falta: fix enter spam
+//falta: fix loading gif (browser does not render gif)
 
 const ToolsList = () => {
 	let intialState = localStorage.getItem("tools");
@@ -46,10 +57,11 @@ const ToolsList = () => {
 	}
 
 	async function onSubmit(e) {
+		if (newTool === "") return;
+
 		setLoading(true);
 		e.preventDefault();
 		e.persist();
-		if (newTool === "") return;
 
 		const tool = {
 			id: Date.now(),
@@ -58,7 +70,10 @@ const ToolsList = () => {
 
 		const file = document.getElementById("file").files[0];
 		tool.image = await upload(file);
+
 		save([...tools, tool]);
+
+		setNewTool("");
 		e.target.reset();
 		setLoading(false);
 	}
@@ -68,22 +83,46 @@ const ToolsList = () => {
 			<h1>Tools list</h1>
 			<form onSubmit={onSubmit}>
 				<input
+					className="text-input"
+					maxlength="300"
 					placeholder="Add new tool"
 					onChange={e => {
 						e.preventDefault();
 						setNewTool(e.target.value);
 					}}
 				/>
-				<input placeholder="image" type="file" id="file" />
-				{!loading && <button type="submit">Add</button>}
+				<input
+					placeholder="image"
+					type="file"
+					id="file"
+					className="img-input"
+				/>
+				{!loading ? (
+					<button type="submit" className="add-button">
+						Add
+					</button>
+				) : (
+					<img id="loading" src={loadingImage} />
+				)}
 				<ul className="tools-list">
 					{tools.map(tool => (
 						<li key={tool.id} className="tool">
-							{tool.text}
+							{/*if (edit === true) {
+								<input type="text" id={tool.key} value={tool.text} onChange={e => {
+									setUpdate(e.target.value, tool.key)
+								}}/>
+							} else {
+								{tool.text}
+							}*/}
+							<p>{tool.text}</p>
 							{tool.image && <img src={tool.image} />}
 							<a href="#" onClick={() => removeTool(tool.id)}>
 								X
 							</a>
+							{/*<a href="#" onClick={() => setEdit(true)}>
+								Edit
+							</a>
+							*/}
 						</li>
 					))}
 				</ul>
@@ -91,8 +130,39 @@ const ToolsList = () => {
 			<p>
 				<strong>{`there are ${tools.length} tools in the list`}</strong>
 			</p>
+
+			{/*			<div className="card-container">
+				{tools.map((card, i) => (
+					<Card
+						key={card.id}
+						index={i}
+						id={card.id}
+						text={card.text}
+						moveCard={moveCard}
+					/>
+				))}
+			</div>
+*/}
 		</div>
 	);
 };
 
 export default ToolsList;
+
+{
+	/*
+
+	<div className="card-container">
+            {this.state.cards.map((card, i) => (
+              <Card
+                key={card.id}
+                index={i}
+                id={card.id}
+                text={card.text}
+                moveCard={this.moveCard}
+              />
+            ))}
+	</div>
+
+*/
+}
