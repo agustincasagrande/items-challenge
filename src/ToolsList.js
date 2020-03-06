@@ -31,7 +31,7 @@ const ToolsList = () => {
 	const [newTool, setNewTool] = useState("");
 	const [tools, setTools] = useState(intialState);
 	const [loading, setLoading] = useState(false);
-	//const [edit, setEdit] = useState(false);
+	const [edit, setEdit] = useState(false);
 
 	function removeTool(id) {
 		save(tools.filter(tool => tool.id != id));
@@ -78,6 +78,58 @@ const ToolsList = () => {
 		setLoading(false);
 	}
 
+	function saveItem() {
+		if (!edit || !edit.text) return;
+
+		const { id, text } = edit;
+		const updatedTools = tools.map(item => {
+			if (item.id === id) return { ...item, text };
+			return item;
+		});
+		save(updatedTools);
+		setEdit(false);
+	}
+	/*
+	{
+		moveCard = (dragIndex, hoverIndex) => {
+			const { cards } = this.state;
+			const dragCard = cards[dragIndex];
+
+			this.setState(
+				update(this.state, {
+					cards: {
+						$splice: [
+							[dragIndex, 1],
+							[hoverIndex, 0, dragCard]
+						]
+					}
+				})
+			);
+		};
+	}
+*/
+
+	//	/*
+	{
+		/*
+		function moveCard(dragIndex, hoverIndex) {
+			const cards = setTools;
+			const dragCard = cards[dragIndex];
+
+			setTools(
+				update(setTools, {
+					cards: {
+						$splice: [
+							[dragIndex, 1],
+							[hoverIndex, 0, dragCard]
+						]
+					}
+				})
+			);
+		}
+	*/
+	}
+
 	return (
 		<div className="all">
 			<h1>Tools list</h1>
@@ -107,22 +159,32 @@ const ToolsList = () => {
 				<ul className="tools-list">
 					{tools.map(tool => (
 						<li key={tool.id} className="tool">
-							{/*if (edit === true) {
-								<input type="text" id={tool.key} value={tool.text} onChange={e => {
-									setUpdate(e.target.value, tool.key)
-								}}/>
-							} else {
-								{tool.text}
-							}*/}
-							<p>{tool.text}</p>
+							{edit.id === tool.id ? (
+								<input
+									value={edit.text || tool.text}
+									onChange={e => {
+										e.preventDefault();
+										setEdit({ ...edit, text: e.target.value });
+									}}
+								/>
+							) : (
+								<p>{tool.text}</p>
+							)}
+
 							{tool.image && <img src={tool.image} />}
 							<a href="#" onClick={() => removeTool(tool.id)}>
 								X
 							</a>
-							{/*<a href="#" onClick={() => setEdit(true)}>
-								Edit
-							</a>
-							*/}
+							{edit.id !== tool.id ? (
+								<a href="#" onClick={() => setEdit({ id: tool.id })}>
+									Edit
+								</a>
+							) : (
+								<div className="edit-actions">
+									<span onClick={saveItem}>Save</span>
+									<span onClick={() => setEdit(false)}>Cancel</span>
+								</div>
+							)}
 						</li>
 					))}
 				</ul>
