@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import "./style.css";
 import HTML5Backend from "react-dnd-html5-backend";
 import { DragDropContext } from "react-dnd";
+import Card from "./Card";
+const update = require("immutability-helper");
+import "./loading.gif";
 
 const ToolsList = () => {
 	let intialState = localStorage.getItem("tools");
@@ -17,6 +20,7 @@ const ToolsList = () => {
 	const [newTool, setNewTool] = useState("");
 	const [tools, setTools] = useState(intialState);
 	const [loading, setLoading] = useState(false);
+	//const [edit, setEdit] = useState(false);
 
 	function removeTool(id) {
 		save(tools.filter(tool => tool.id != id));

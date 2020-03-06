@@ -1,19 +1,69 @@
+/* 1em = 16px */
 .all {
 	text-align: center;
-	padding: 1em;
+	padding: 16px;
 	line-height: 1.4;
 }
 
 .tools-list {
 	list-style-type: none;
-	padding: 1em;
+	padding: 16px;
 }
 
 .tool {
-	text-align: center;
+	display: flex;
+	border: 1px solid #000;
+	margin: 10px;
+	margin-left: 200px;
+	margin-right: 200px;
+	background-color: lightgrey;
+	padding: 80px;
+}
+
+.tool p {
+	text-align: left;
+	font-size: 20px;
+	vertical-align: middle;
 }
 
 .tool img {
-	max-width: 320px;
-	max-height: 320px;
+	margin-left: auto;
+	align: middle;
+	width: 320px;
+	height: 320px;
+}
+
+.tool a {
+	margin-left: auto;
+}
+
+.add-button {
+	padding: 10px;
+	font-size: 16px;
+	margin: 10px;
+	margin-right: 0px;
+	background-color: blue;
+	color: white;
+	border: 2px solid blue;
+
+	border-radius: 5px;
+}
+
+.text-input {
+	padding: 10px;
+	font-size: 16px;
+	border: 2px solid grey;
+	width: 165px;
+}
+
+.add-button:hover {
+	background-color: purple;
+	border: 2px solid purple;
+	cursor: pointer;
+}
+
+.img-input {
+	background-color: solid White;
+	font-size: 16px;
+	padding: 10px;
 }
