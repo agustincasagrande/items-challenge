@@ -4,7 +4,7 @@ import HTML5Backend from "react-dnd-html5-backend";
 import { DragDropContext } from "react-dnd";
 import Card from "./Card";
 const update = require("immutability-helper");
-import loadingImage from "./loading.gif";
+import loadingImage from "./assets/loading.gif";
 //import "./pictures/pincers";
 //import "./pictures/Hammer";
 //import "./pictures/Screwdriver";
