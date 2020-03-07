@@ -52,16 +52,16 @@
 
 .edit-button {
 	margin: 8px;
-	height: 35px;
 	margin-top: 4px;
-	background-color: lightgreen;
-	border-radius: 6px;
-	border: 1px solid #000;
+	height: 24px;
+	width: 24px;
+	background: url("assets/edit.png") no-repeat;
+	cursor: pointer;
 }
 
 .edit-button:hover {
 	border: 2px white;
-	cursor: pointer;
+	background: url("assets/edit-hover.png") no-repeat;
 }
 
 .cancel-button {

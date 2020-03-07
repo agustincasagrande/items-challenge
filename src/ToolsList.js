@@ -4,15 +4,17 @@ import HTML5Backend from "react-dnd-html5-backend";
 import Item from "./Item";
 import update from "immutability-helper";
 
+// edit needs an option to update image
+
 const ToolsList = () => {
 	let intialState = localStorage.getItem("tools");
 	intialState = intialState
 		? JSON.parse(intialState)
 		: [
 				{ id: 1, text: "Hammer", image: "/pictures/hammer.jpg" },
-				{ id: 2, text: "Screwdriver" },
-				{ id: 3, text: "Pincers" },
-				{ id: 4, text: "Wrench" }
+				{ id: 2, text: "Screwdriver", image: "/pictures/screwdriver.jpg" },
+				{ id: 3, text: "Pincers", image: "/pictures/pincers.jpg" },
+				{ id: 4, text: "Wrench", image: "/pictures/wrench.jpg" }
 		  ];
 
 	const [newTool, setNewTool] = useState("");
@@ -123,6 +125,7 @@ const ToolsList = () => {
 						<Item
 							key={item.id}
 							edit={edit}
+							setEdit={setEdit}
 							data={item}
 							moveItem={moveItem}
 							index={index}

@@ -8,7 +8,15 @@ const style = {
   cursor: "move"
 };
 const type = "item";
-const Item = ({ data, index, moveItem, edit, removeItem, saveItem }) => {
+const Item = ({
+  data,
+  index,
+  moveItem,
+  edit,
+  removeItem,
+  saveItem,
+  setEdit
+}) => {
   const ref = useRef(null);
   const [, drop] = useDrop({
     accept: type,
@@ -76,12 +84,10 @@ const Item = ({ data, index, moveItem, edit, removeItem, saveItem }) => {
       {data.image && <img src={data.image} />}
       <span className="delete" onClick={() => removeItem(data.id)}></span>
       {edit.id !== data.id ? (
-        <button
+        <span
           className="edit-button"
           onClick={() => setEdit({ id: data.id })}
-        >
-          Edit
-        </button>
+        ></span>
       ) : (
         <div className="edit-actions">
           <span onClick={saveItem}>
