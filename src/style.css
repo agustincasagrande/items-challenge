@@ -15,9 +15,10 @@
 	margin: 10px;
 	margin-left: 200px;
 	margin-right: 200px;
-	background-color: lightgrey;
+	background-color: lightblue;
 	padding: 80px;
 	border-radius: 10px;
+	font-family: sans-serif;
 }
 
 .tool p {
@@ -33,8 +34,59 @@
 	height: 320px;
 }
 
-.tool a {
+.delete {
 	margin-left: auto;
+	margin-top: 4px;
+	padding: 6px;
+	height: 24px;
+	width: 24px;
+	background: url("/assets/delete.png") no-repeat;
+	color: white;
+	cursor: pointer;
+}
+
+.delete:hover {
+	border: 2px white;
+	background: url("/assets/delete-hover.png") no-repeat;
+}
+
+.edit-button {
+	margin: 8px;
+	height: 35px;
+	margin-top: 4px;
+	background-color: lightgreen;
+	border-radius: 6px;
+	border: 1px solid #000;
+}
+
+.edit-button:hover {
+	border: 2px white;
+	cursor: pointer;
+}
+
+.cancel-button {
+	background-color: grey;
+	margin-top: 4px;
+	border-radius: 6px;
+	border: 1px solid #000;
+}
+
+.cancel-button:hover {
+	border: 2px white;
+	cursor: pointer;
+}
+
+.save-button {
+	background-color: lightgreen;
+	margin-top: 4px;
+	margin: 8px;
+	border-radius: 6px;
+	border: 1px solid #000;
+}
+
+.save-button:hover {
+	border: 2px white;
+	cursor: pointer;
 }
 
 .add-button {

@@ -1,28 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import "./style.css";
 import HTML5Backend from "react-dnd-html5-backend";
-import { DragDropContext } from "react-dnd";
-import Card from "./Card";
-const update = require("immutability-helper");
-import loadingImage from "./assets/loading.gif";
-//import "./pictures/pincers";
-//import "./pictures/Hammer";
-//import "./pictures/Screwdriver";
-//import "./pictures/wrench";
-
-//falta: fix drag n drop
-//falta: fix edit button
-//falta: displaying deffault items
-//falta: add a picture to deffault items
-//falta: fix enter spam
-//falta: fix loading gif (browser does not render gif)
+import Item from "./Item";
+import update from "immutability-helper";
 
 const ToolsList = () => {
 	let intialState = localStorage.getItem("tools");
 	intialState = intialState
 		? JSON.parse(intialState)
 		: [
-				{ id: 1, text: "Hammer" },
+				{ id: 1, text: "Hammer", image: "/pictures/hammer.jpg" },
 				{ id: 2, text: "Screwdriver" },
 				{ id: 3, text: "Pincers" },
 				{ id: 4, text: "Wrench" }
@@ -33,7 +20,7 @@ const ToolsList = () => {
 	const [loading, setLoading] = useState(false);
 	const [edit, setEdit] = useState(false);
 
-	function removeTool(id) {
+	function removeItem(id) {
 		save(tools.filter(tool => tool.id != id));
 	}
 
@@ -89,46 +76,21 @@ const ToolsList = () => {
 		save(updatedTools);
 		setEdit(false);
 	}
-	/*
-	{
-		moveCard = (dragIndex, hoverIndex) => {
-			const { cards } = this.state;
-			const dragCard = cards[dragIndex];
 
-			this.setState(
-				update(this.state, {
-					cards: {
-						$splice: [
-							[dragIndex, 1],
-							[hoverIndex, 0, dragCard]
-						]
-					}
+	const moveItem = useCallback(
+		(dragIndex, hoverIndex) => {
+			const dragItem = tools[dragIndex];
+			save(
+				update(tools, {
+					$splice: [
+						[dragIndex, 1],
+						[hoverIndex, 0, dragItem]
+					]
 				})
 			);
-		};
-	}
-*/
-
-	//	/*
-	{
-		/*
-		function moveCard(dragIndex, hoverIndex) {
-			const cards = setTools;
-			const dragCard = cards[dragIndex];
-
-			setTools(
-				update(setTools, {
-					cards: {
-						$splice: [
-							[dragIndex, 1],
-							[hoverIndex, 0, dragCard]
-						]
-					}
-				})
-			);
-		}
-	*/
-	}
+		},
+		[tools]
+	);
 
 	return (
 		<div className="all">
@@ -136,7 +98,7 @@ const ToolsList = () => {
 			<form onSubmit={onSubmit}>
 				<input
 					className="text-input"
-					maxlength="300"
+					maxLength="300"
 					placeholder="Add new tool"
 					onChange={e => {
 						e.preventDefault();
@@ -154,77 +116,28 @@ const ToolsList = () => {
 						Add
 					</button>
 				) : (
-					<img id="loading" src={loadingImage} />
+					<img id="loading" src="/assets/loading.gif" />
 				)}
 				<ul className="tools-list">
-					{tools.map(tool => (
-						<li key={tool.id} className="tool">
-							{edit.id === tool.id ? (
-								<input
-									value={edit.text || tool.text}
-									onChange={e => {
-										e.preventDefault();
-										setEdit({ ...edit, text: e.target.value });
-									}}
-								/>
-							) : (
-								<p>{tool.text}</p>
-							)}
-
-							{tool.image && <img src={tool.image} />}
-							<a href="#" onClick={() => removeTool(tool.id)}>
-								X
-							</a>
-							{edit.id !== tool.id ? (
-								<a href="#" onClick={() => setEdit({ id: tool.id })}>
-									Edit
-								</a>
-							) : (
-								<div className="edit-actions">
-									<span onClick={saveItem}>Save</span>
-									<span onClick={() => setEdit(false)}>Cancel</span>
-								</div>
-							)}
-						</li>
+					{tools.map((item, index) => (
+						<Item
+							key={item.id}
+							edit={edit}
+							data={item}
+							moveItem={moveItem}
+							index={index}
+							removeItem={removeItem}
+							saveItem={saveItem}
+						/>
 					))}
 				</ul>
 			</form>
-			<p>
-				<strong>{`there are ${tools.length} tools in the list`}</strong>
-			</p>
 
-			{/*			<div className="card-container">
-				{tools.map((card, i) => (
-					<Card
-						key={card.id}
-						index={i}
-						id={card.id}
-						text={card.text}
-						moveCard={moveCard}
-					/>
-				))}
-			</div>
-*/}
+			<p>
+				<strong>{`There are ${tools.length} tools in the list`}</strong>
+			</p>
 		</div>
 	);
 };
 
 export default ToolsList;
-
-{
-	/*
-
-	<div className="card-container">
-            {this.state.cards.map((card, i) => (
-              <Card
-                key={card.id}
-                index={i}
-                id={card.id}
-                text={card.text}
-                moveCard={this.moveCard}
-              />
-            ))}
-	</div>
-
-*/
-}

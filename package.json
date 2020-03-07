@@ -6,6 +6,7 @@
   "dependencies": {
     "immutability-helper": "^3.0.1",
     "lodash.flow": "^3.5.0",
+    "parcel-plugin-static-files-copy": "^2.3.1",
     "react": "^16.13.0",
     "react-dnd": "^10.0.2",
     "react-dnd-html5-backend": "^10.0.2",
@@ -22,6 +23,11 @@
     "dev": "parcel src/index.html",
     "format": "prettier \"src/**/*.{js,html}\" --write",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "staticFiles": {
+    "staticPath": [
+      "src/assets"
+    ]
   },
   "babel": {
     "presets": [
