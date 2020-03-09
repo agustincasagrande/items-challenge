@@ -4,8 +4,6 @@ import HTML5Backend from "react-dnd-html5-backend";
 import Item from "./Item";
 import update from "immutability-helper";
 
-// edit needs an option to update image
-
 const ItemsList = () => {
 	let intialState = localStorage.getItem("items");
 	intialState = intialState
@@ -125,6 +123,7 @@ const ItemsList = () => {
 					type="file"
 					id="file"
 					className="img-input"
+					accept="image/x-png,image/gif,image/jpeg"
 				/>
 				{!loading ? (
 					<button type="submit" className="add-button">

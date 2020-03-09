@@ -82,6 +82,7 @@ const Item = ({
             placeholder="image"
             type="file"
             className="edit-image"
+            accept="image/x-png,image/gif,image/jpeg"
             onChange={e => {
               setEdit({ ...edit, file: e.target.files[0] });
             }}
