@@ -4,13 +4,16 @@
 	line-height: 1.4;
 }
 
-.tools-list {
+.items-list {
 	list-style-type: none;
 	padding: 16px;
 }
 
-.tool {
+.item {
 	display: flex;
+	fkex-flow: row nowrap;
+	justify-content: center;
+	align-items: center;
 	border: 1px solid #000;
 	margin: 10px;
 	margin-left: 200px;
@@ -21,13 +24,13 @@
 	font-family: sans-serif;
 }
 
-.tool p {
+.item p {
 	text-align: left;
 	font-size: 20px;
 	vertical-align: middle;
 }
 
-.tool img {
+.item img {
 	margin-left: auto;
 	align: middle;
 	width: 320px;
@@ -118,6 +121,10 @@
 	background-color: solid White;
 	font-size: 16px;
 	padding: 10px;
+}
+
+.edit-image {
+	margin: 4px;
 }
 
 #loading {

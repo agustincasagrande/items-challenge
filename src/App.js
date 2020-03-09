@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "react-dom";
-import ToolsList from "./ToolsList.js";
+import ItemsList from "./ItemsList.js";
 import { DndProvider } from "react-dnd";
 import Backend from "react-dnd-html5-backend";
 
@@ -8,7 +8,7 @@ const App = () => {
 	return (
 		<div className="App">
 			<DndProvider backend={Backend}>
-				<ToolsList />
+				<ItemsList />
 			</DndProvider>
 		</div>
 	);

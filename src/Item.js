@@ -68,15 +68,25 @@ const Item = ({
   const opacity = isDragging ? 0 : 1;
   drag(drop(ref));
   return (
-    <li ref={ref} key={data.id} className="tool" style={{ ...style, opacity }}>
+    <li ref={ref} key={data.id} className="item" style={{ ...style, opacity }}>
       {edit.id === data.id ? (
-        <input
-          value={edit.text || data.text}
-          onChange={e => {
-            e.preventDefault();
-            setEdit({ ...edit, text: e.target.value });
-          }}
-        />
+        <div>
+          <input
+            value={edit.text || data.text}
+            onChange={e => {
+              e.preventDefault();
+              setEdit({ ...edit, text: e.target.value });
+            }}
+          />
+          <input
+            placeholder="image"
+            type="file"
+            className="edit-image"
+            onChange={e => {
+              setEdit({ ...edit, image: e.target });
+            }}
+          />
+        </div>
       ) : (
         <p>{data.text}</p>
       )}
@@ -90,11 +100,11 @@ const Item = ({
         ></span>
       ) : (
         <div className="edit-actions">
-          <span onClick={saveItem}>
-            <button className="save-button">Save</button>
+          <span className="save-button" onClick={saveItem}>
+            Save
           </span>
-          <span onClick={() => setEdit(false)}>
-            <button className="cancel-button">Cancel</button>
+          <span className="cancel-button" onClick={() => setEdit(false)}>
+            Cancel
           </span>
         </div>
       )}

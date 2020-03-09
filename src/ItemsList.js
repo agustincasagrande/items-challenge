@@ -6,8 +6,8 @@ import update from "immutability-helper";
 
 // edit needs an option to update image
 
-const ToolsList = () => {
-	let intialState = localStorage.getItem("tools");
+const ItemsList = () => {
+	let intialState = localStorage.getItem("items");
 	intialState = intialState
 		? JSON.parse(intialState)
 		: [
@@ -17,13 +17,13 @@ const ToolsList = () => {
 				{ id: 4, text: "Wrench", image: "/pictures/wrench.jpg" }
 		  ];
 
-	const [newTool, setNewTool] = useState("");
-	const [tools, setTools] = useState(intialState);
+	const [newItem, setNewItem] = useState("");
+	const [items, setItems] = useState(intialState);
 	const [loading, setLoading] = useState(false);
 	const [edit, setEdit] = useState(false);
 
 	function removeItem(id) {
-		save(tools.filter(tool => tool.id != id));
+		save(items.filter(item => item.id != id));
 	}
 
 	async function upload(bytes) {
@@ -40,50 +40,61 @@ const ToolsList = () => {
 		return data.link;
 	}
 
-	function save(items) {
-		setTools(items);
-		window.localStorage.setItem("tools", JSON.stringify(items));
+	function save(x) {
+		setItems(x);
+		window.localStorage.setItem("items", JSON.stringify(x));
 	}
 
 	async function onSubmit(e) {
-		if (newTool === "") return;
+		e.preventDefault();
+
+		if (newItem === "") return;
 
 		setLoading(true);
-		e.preventDefault();
 		e.persist();
 
-		const tool = {
+		const item = {
 			id: Date.now(),
-			text: newTool
+			text: newItem
 		};
 
 		const file = document.getElementById("file").files[0];
-		tool.image = await upload(file);
+		item.image = await upload(file);
 
-		save([...tools, tool]);
+		save([...items, item]);
 
-		setNewTool("");
+		setNewItem("");
 		e.target.reset();
 		setLoading(false);
 	}
 
-	function saveItem() {
-		if (!edit || !edit.text) return;
+	async function saveItem() {
+		if (!edit || (!edit.text && !edit.image)) return;
 
 		const { id, text } = edit;
-		const updatedTools = tools.map(item => {
-			if (item.id === id) return { ...item, text };
+		const file = edit.image && edit.image.files[0];
+		const image = file && (await upload(file));
+
+		const updatedItems = items.map(item => {
+			if (item.id === id) {
+				return {
+					...item,
+					text: text || item.text,
+					image: image || item.image
+				};
+			}
 			return item;
 		});
-		save(updatedTools);
+
+		save(updatedItems);
 		setEdit(false);
 	}
 
 	const moveItem = useCallback(
 		(dragIndex, hoverIndex) => {
-			const dragItem = tools[dragIndex];
+			const dragItem = items[dragIndex];
 			save(
-				update(tools, {
+				update(items, {
 					$splice: [
 						[dragIndex, 1],
 						[hoverIndex, 0, dragItem]
@@ -91,20 +102,20 @@ const ToolsList = () => {
 				})
 			);
 		},
-		[tools]
+		[items]
 	);
 
 	return (
 		<div className="all">
-			<h1>Tools list</h1>
+			<h1>Items list</h1>
 			<form onSubmit={onSubmit}>
 				<input
 					className="text-input"
 					maxLength="300"
-					placeholder="Add new tool"
+					placeholder="Add new item"
 					onChange={e => {
 						e.preventDefault();
-						setNewTool(e.target.value);
+						setNewItem(e.target.value);
 					}}
 				/>
 				<input
@@ -120,8 +131,8 @@ const ToolsList = () => {
 				) : (
 					<img id="loading" src="/assets/loading.gif" />
 				)}
-				<ul className="tools-list">
-					{tools.map((item, index) => (
+				<ul className="items-list">
+					{items.map((item, index) => (
 						<Item
 							key={item.id}
 							edit={edit}
@@ -137,10 +148,10 @@ const ToolsList = () => {
 			</form>
 
 			<p>
-				<strong>{`There are ${tools.length} tools in the list`}</strong>
+				<strong>{`There are ${items.length} items in the list`}</strong>
 			</p>
 		</div>
 	);
 };
 
-export default ToolsList;
+export default ItemsList;
