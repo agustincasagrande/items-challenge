@@ -69,10 +69,11 @@ const ItemsList = () => {
 	}
 
 	async function saveItem() {
-		if (!edit || (!edit.text && !edit.image)) return;
+		if (!edit || (!edit.text && !edit.file)) return;
 
-		const { id, text } = edit;
-		const file = edit.image && edit.image.files[0];
+		const { id, text, file } = edit;
+
+		setEdit({ ...edit, loading: true });
 		const image = file && (await upload(file));
 
 		const updatedItems = items.map(item => {
@@ -108,6 +109,7 @@ const ItemsList = () => {
 	return (
 		<div className="all">
 			<h1>Items list</h1>
+			<p>{`There are ${items.length} items in the list`}</p>
 			<form onSubmit={onSubmit}>
 				<input
 					className="text-input"
@@ -129,7 +131,7 @@ const ItemsList = () => {
 						Add
 					</button>
 				) : (
-					<img id="loading" src="/assets/loading.gif" />
+					<img className="loading" src="/assets/loading.gif" />
 				)}
 				<ul className="items-list">
 					{items.map((item, index) => (
@@ -146,10 +148,6 @@ const ItemsList = () => {
 					))}
 				</ul>
 			</form>
-
-			<p>
-				<strong>{`There are ${items.length} items in the list`}</strong>
-			</p>
 		</div>
 	);
 };

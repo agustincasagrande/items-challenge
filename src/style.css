@@ -11,7 +11,7 @@
 
 .item {
 	display: flex;
-	fkex-flow: row nowrap;
+	flex-flow: row nowrap;
 	justify-content: center;
 	align-items: center;
 	border: 1px solid #000;
@@ -24,23 +24,30 @@
 	font-family: sans-serif;
 }
 
+.edit-actions {
+	display: flex;
+}
+
 .item p {
 	text-align: left;
 	font-size: 20px;
 	vertical-align: middle;
+	width: 300px;
 }
 
-.item img {
+.item .image {
 	margin-left: auto;
-	align: middle;
 	width: 320px;
 	height: 320px;
 }
 
-.delete {
+.item .controls {
+	display: flex;
 	margin-left: auto;
-	margin-top: 4px;
-	padding: 6px;
+}
+
+.delete {
+	margin: 0px 5px;
 	height: 24px;
 	width: 24px;
 	background: url("/assets/delete.png") no-repeat;
@@ -54,8 +61,7 @@
 }
 
 .edit-button {
-	margin: 8px;
-	margin-top: 4px;
+	margin: 0 5px;
 	height: 24px;
 	width: 24px;
 	background: url("assets/edit.png") no-repeat;
@@ -68,28 +74,30 @@
 }
 
 .cancel-button {
-	background-color: grey;
-	margin-top: 4px;
-	border-radius: 6px;
-	border: 1px solid #000;
+	margin: 0 5px;
+	height: 24px;
+	width: 24px;
+	background: url("/assets/cancel.png") no-repeat;
+	color: white;
+	cursor: pointer;
 }
 
 .cancel-button:hover {
 	border: 2px white;
-	cursor: pointer;
+	background: url("/assets/cancel-hover.png") no-repeat;
 }
 
 .save-button {
-	background-color: lightgreen;
-	margin-top: 4px;
-	margin: 8px;
-	border-radius: 6px;
-	border: 1px solid #000;
+	margin: 0 5px;
+	height: 24px;
+	width: 24px;
+	background: url("assets/save.png") no-repeat;
+	cursor: pointer;
 }
 
 .save-button:hover {
 	border: 2px white;
-	cursor: pointer;
+	background: url("/assets/save-hover.png") no-repeat;
 }
 
 .add-button {
@@ -127,6 +135,6 @@
 	margin: 4px;
 }
 
-#loading {
+.loading {
 	width: 20px;
 }

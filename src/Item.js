@@ -72,9 +72,9 @@ const Item = ({
       {edit.id === data.id ? (
         <div>
           <input
-            value={edit.text || data.text}
+            value={edit.text === undefined ? data.text : data.edit}
+            maxLength="300"
             onChange={e => {
-              e.preventDefault();
               setEdit({ ...edit, text: e.target.value });
             }}
           />
@@ -83,31 +83,34 @@ const Item = ({
             type="file"
             className="edit-image"
             onChange={e => {
-              setEdit({ ...edit, image: e.target });
+              setEdit({ ...edit, file: e.target.files[0] });
             }}
           />
         </div>
       ) : (
         <p>{data.text}</p>
       )}
+      {data.image && <img className="image" src={data.image} />}
 
-      {data.image && <img src={data.image} />}
-      <span className="delete" onClick={() => removeItem(data.id)}></span>
-      {edit.id !== data.id ? (
-        <span
-          className="edit-button"
-          onClick={() => setEdit({ id: data.id })}
-        ></span>
-      ) : (
-        <div className="edit-actions">
-          <span className="save-button" onClick={saveItem}>
-            Save
-          </span>
-          <span className="cancel-button" onClick={() => setEdit(false)}>
-            Cancel
-          </span>
-        </div>
-      )}
+      <div className="controls">
+        <span className="delete" onClick={() => removeItem(data.id)}></span>
+        {edit.id !== data.id ? (
+          <span
+            className="edit-button"
+            onClick={() => setEdit({ id: data.id })}
+          ></span>
+        ) : edit.loading ? (
+          <img className="loading" src="/assets/loading.gif" />
+        ) : (
+          <div className="edit-actions">
+            <span className="save-button" onClick={saveItem}></span>
+            <span
+              className="cancel-button"
+              onClick={() => setEdit(false)}
+            ></span>
+          </div>
+        )}
+      </div>
     </li>
   );
 };
