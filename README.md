@@ -2,7 +2,7 @@
 
 ```
 npm install
-npm run rev
+npm run dev
 ```
 
 Now go to: http://localhost:1234
